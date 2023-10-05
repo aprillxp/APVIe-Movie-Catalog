@@ -1,2 +1,4 @@
 # MaryjaneWorld-ReactJS
-Movie mobile app based on IMDb app React Native library, Apollo Client for Frontend Apollo Server, Sequelize, PostgreSQL, Express for Backend
+Movie mobile app based on IMDb app
+ReactJS library for Frontend
+Sequelize, PostgreSQL, Express for Backend
