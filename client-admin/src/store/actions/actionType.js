@@ -3,6 +3,11 @@ export const MOVIE_FETCH_SUCCESS = "movies/fetchSuccess";
 export const MOVIE_FETCH_REQUEST = "movies/fetchRequest";
 export const MOVIE_FETCH_FAILED = "movies/fetchFailed";
 
+// movie id
+export const MOVIEID_FETCH_SUCCESS = "movies/:id/fetchSuccess";
+export const MOVIEID_FETCH_REQUEST = "movies/:id/fetchRequest";
+export const MOVIEID_FETCH_FAILED = "movies/:id/fetchFailed";
+
 // add movies
 export const ADD_MOVIE_SUCCESS = "movies/addSuccess";
 export const ADD_MOVIE_REQUEST = "movies/addRequest";

@@ -2,6 +2,9 @@ import {
   EDIT_MOVIE_FAILED,
   EDIT_MOVIE_REQUEST,
   EDIT_MOVIE_SUCCESS,
+  MOVIEID_FETCH_FAILED,
+  MOVIEID_FETCH_REQUEST,
+  MOVIEID_FETCH_SUCCESS,
   MOVIE_FETCH_FAILED,
   MOVIE_FETCH_REQUEST,
   MOVIE_FETCH_SUCCESS,
@@ -9,6 +12,7 @@ import {
 
 const initalState = {
   movies: [],
+  movie: null,
   loading: false,
   error: null,
 };
@@ -16,13 +20,11 @@ const initalState = {
 export default function movieReducer(state = initalState, action) {
   switch (action.type) {
     case MOVIE_FETCH_REQUEST:
-      // console.log(action, '<-- reducer');
       return {
         ...state,
         loading: true,
       };
     case MOVIE_FETCH_SUCCESS:
-      // console.log(action, '<-- reducer');
       return {
         ...state,
         movies: action.payload,
@@ -34,26 +36,44 @@ export default function movieReducer(state = initalState, action) {
         error: action.payload,
         loading: false,
       };
-    case EDIT_MOVIE_REQUEST:
+    case MOVIEID_FETCH_REQUEST:
       return {
         ...state,
         loading: true,
       };
-    case EDIT_MOVIE_SUCCESS:
-      const updateMovie = state.movies.map((movie) => {
-        movie.id === movie.payload.id ? movie.payload : movie;
-      });
+    case MOVIEID_FETCH_SUCCESS:
       return {
         ...state,
-        movies: updateMovie,
+        movie: action.payload,
         loading: false,
       };
-    case EDIT_MOVIE_FAILED:
+    case MOVIEID_FETCH_FAILED:
       return {
         ...state,
         error: action.payload,
         loading: false,
       };
+    // case EDIT_MOVIE_REQUEST:
+    //   return {
+    //     ...state,
+    //     loading: true,
+    //   };
+    // case EDIT_MOVIE_SUCCESS:
+    //   const updateMovie = state.movies.map((movie) => {
+    //     movie.id === movie.payload.id ? movie.payload : movie;
+    //   });
+    //   return {
+    //     ...state,
+    //     movies: updateMovie,
+    //     loading: false,
+    //   };
+    // case EDIT_MOVIE_FAILED:
+    //   return {
+    //     ...state,
+    //     error: action.payload,
+    //     loading: false,
+    //   };
+
     default:
       return state;
   }

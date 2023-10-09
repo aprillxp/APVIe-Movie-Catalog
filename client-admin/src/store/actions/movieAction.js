@@ -5,6 +5,9 @@ import {
   EDIT_MOVIE_FAILED,
   EDIT_MOVIE_REQUEST,
   EDIT_MOVIE_SUCCESS,
+  MOVIEID_FETCH_FAILED,
+  MOVIEID_FETCH_REQUEST,
+  MOVIEID_FETCH_SUCCESS,
   MOVIE_FETCH_FAILED,
   MOVIE_FETCH_REQUEST,
   MOVIE_FETCH_SUCCESS,
@@ -40,6 +43,7 @@ export const asyncFetchMovies = () => {
       const response = await fetch(BASE_URL + "/movies", {
         method: "get",
         headers: {
+          access_token: localStorage.access_token,
           "Content-Type": "application/json",
         },
       });
@@ -123,22 +127,66 @@ export const editFailed = (data) => {
 };
 
 export const asyncEditMovies = (movieId, movieData, navigate) => {
-  return (dispatch) => {
-    dispatch(editRequest());
-    fetch(BASE_URL + "/movies/" + movieId, {
-      method: "patch",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(movieData),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        dispatch(editSuccess(data));
-        navigate("/");
-      })
-      .catch((err) => {
-        dispatch(editFailed(err));
+  return async (dispatch) => {
+    try {
+      const response = await fetch(BASE_URL + "/movies/" + movieId, {
+        method: "patch",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(movieData),
       });
+
+      const data = await response.json();
+      if (!response.ok) {
+        throw data;
+      }
+
+      dispatch(asyncFetchMovies());
+    } catch (error) {
+      dispatch(editFailed(error));
+    }
+  };
+};
+
+export const fetchMovieIdRequest = () => {
+  return {
+    type: MOVIEID_FETCH_REQUEST,
+  };
+};
+
+export const fetchMovieIdSuccess = (data) => {
+  return {
+    type: MOVIEID_FETCH_SUCCESS,
+    payload: data,
+  };
+};
+
+export const fetchMovieIdFailed = (data) => {
+  return {
+    type: MOVIEID_FETCH_FAILED,
+    payload: data,
+  };
+};
+
+export const asyncDetailMovie = (id) => {
+  return async (dispatch) => {
+    dispatch(fetchMovieIdRequest());
+    try {
+      const response = await fetch(BASE_URL + "/movies/" + id, {
+        headers: {
+          access_token: localStorage.access_token,
+        },
+      });
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw data;
+      }
+
+      dispatch({ type: MOVIEID_FETCH_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch(fetchMovieIdFailed(error));
+    }
   };
 };

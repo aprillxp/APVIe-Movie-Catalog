@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, Input, Button, Typography } from "@material-tailwind/react";
-import { handleLogin } from "../store/actions/actionCreator";
+import { handleLogin } from "../store/actions";
 import { useDispatch } from "react-redux";
 
 export default function Login() {

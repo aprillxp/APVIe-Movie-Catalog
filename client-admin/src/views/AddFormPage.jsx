@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Card, Input, Button, Typography } from "@material-tailwind/react";
 import { useDispatch } from "react-redux";
-import { asyncCreateMovie } from "../store/actions/movieAction";
+import { asyncCreateMovie } from "../store/actions";
 import { useNavigate } from "react-router-dom";
 
 export default function AddMovie() {
