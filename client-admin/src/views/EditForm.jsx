@@ -1,5 +1,5 @@
 import { Card, Input, Button, Typography } from "@material-tailwind/react";
-import { asyncEditMovies } from "../store/actions/actionCreator";
+import { asyncEditMovies } from "../store/actions/movieAction";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";

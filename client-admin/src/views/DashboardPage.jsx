@@ -1,7 +1,7 @@
 import MovieTable from "../components/TableRow";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { asyncFetchMovies } from "../store/actions/actionCreator";
+import { asyncFetchMovies } from "../store/actions/movieAction";
 import { Link } from "react-router-dom";
 
 export default function Home() {
