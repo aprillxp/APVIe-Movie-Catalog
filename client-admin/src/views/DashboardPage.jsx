@@ -14,15 +14,15 @@ export default function Home() {
     dispatch(asyncFetchMovies());
   }, []);
 
-  if (loading) {
-    return (
-      <div className="text-center h-screen">
-        <span className="justify-center loading loading-infinity loading-lg items-center">
-          <h3>Load your data...</h3>
-        </span>
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div className="text-center h-screen">
+  //       <span className="justify-center loading loading-infinity loading-lg items-center">
+  //         <h3>Load your data...</h3>
+  //       </span>
+  //     </div>
+  //   );
+  // }
 
   return (
     <>
@@ -63,7 +63,7 @@ export default function Home() {
                     </tr>
                   </thead>
                   <tbody>
-                    {movies.map((movie, i) => {
+                    {movies.map((movie) => {
                       return <MovieTable movie={movie} />;
                     })}
                   </tbody>

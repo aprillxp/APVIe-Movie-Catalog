@@ -1,44 +1,43 @@
 import {
-  ADD_MOVIE_FAILED,
-  ADD_MOVIE_REQUEST,
-  ADD_MOVIE_SUCCESS,
-  EDIT_MOVIE_FAILED,
-  EDIT_MOVIE_REQUEST,
-  EDIT_MOVIE_SUCCESS,
-  MOVIEID_FETCH_FAILED,
-  MOVIEID_FETCH_REQUEST,
   MOVIEID_FETCH_SUCCESS,
-  MOVIE_FETCH_FAILED,
   MOVIE_FETCH_REQUEST,
   MOVIE_FETCH_SUCCESS,
 } from "./actionType";
-
+import Swal from "sweetalert2";
 const BASE_URL = "http://localhost:3000";
 
-export const fetchRequest = () => {
+const swal = (icon, title) => {
+  Swal.fire({
+    icon: icon,
+    title: title,
+    showConfirmButton: false,
+    timer: 1000,
+  });
+};
+
+export const movieFetchRequest = () => {
   return {
     type: MOVIE_FETCH_REQUEST,
   };
 };
 
-export const fetchSuccess = (data) => {
+export const movieFetchSuccess = (payload) => {
   return {
     type: MOVIE_FETCH_SUCCESS,
-    payload: data,
+    payload,
   };
 };
 
-export const fetchFailed = (data) => {
+export const movieFetchById = (payload) => {
   return {
-    type: MOVIE_FETCH_FAILED,
-    payload: data,
+    type: MOVIEID_FETCH_SUCCESS,
+    payload,
   };
 };
 
-export const asyncFetchMovies = () => {
+export const fetchMovies = () => {
   return async (dispatch) => {
-    dispatch(fetchRequest());
-
+    dispatch(movieFetchRequest());
     try {
       const response = await fetch(BASE_URL + "/movies", {
         method: "get",
@@ -47,131 +46,23 @@ export const asyncFetchMovies = () => {
           "Content-Type": "application/json",
         },
       });
-      if (!response.ok) {
-        throw { message: "Something Wrong" };
-      }
-
       const data = await response.json();
 
-      setTimeout(() => {
-        dispatch(fetchSuccess(data));
-      }, 2000);
-    } catch (error) {
-      dispatch(fetchFailed(error));
-    }
-  };
-};
-
-export const addRequest = () => {
-  return {
-    type: ADD_MOVIE_REQUEST,
-  };
-};
-
-export const addSuccess = (data) => {
-  return {
-    type: ADD_MOVIE_SUCCESS,
-    payload: data,
-  };
-};
-
-export const addFailed = (data) => {
-  return {
-    type: ADD_MOVIE_FAILED,
-    payload: data,
-  };
-};
-
-export const asyncCreateMovie = (payload) => {
-  return async (dispatch) => {
-    try {
-      const response = await fetch(BASE_URL + "/movies", {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-      if (!response.ok) {
-        throw { message: "Something Wrong" };
-      }
-
-      const data = await response.json();
-
-      return data;
-    } catch (error) {
-      dispatch(fetchFailed(error));
-      throw error;
-    }
-  };
-};
-
-export const editRequest = () => {
-  return {
-    type: EDIT_MOVIE_REQUEST,
-  };
-};
-
-export const editSuccess = (data) => {
-  return {
-    type: EDIT_MOVIE_SUCCESS,
-    payload: data,
-  };
-};
-
-export const editFailed = (data) => {
-  return {
-    type: EDIT_MOVIE_FAILED,
-    payload: data,
-  };
-};
-
-export const asyncEditMovies = (movieId, movieData, navigate) => {
-  return async (dispatch) => {
-    try {
-      const response = await fetch(BASE_URL + "/movies/" + movieId, {
-        method: "patch",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(movieData),
-      });
-
-      const data = await response.json();
       if (!response.ok) {
         throw data;
       }
 
-      dispatch(asyncFetchMovies());
+      setTimeout(() => {
+        dispatch(movieFetchSuccess(data));
+      }, 1000);
     } catch (error) {
-      dispatch(editFailed(error));
+      swal("error", error.message);
     }
   };
 };
 
-export const fetchMovieIdRequest = () => {
-  return {
-    type: MOVIEID_FETCH_REQUEST,
-  };
-};
-
-export const fetchMovieIdSuccess = (data) => {
-  return {
-    type: MOVIEID_FETCH_SUCCESS,
-    payload: data,
-  };
-};
-
-export const fetchMovieIdFailed = (data) => {
-  return {
-    type: MOVIEID_FETCH_FAILED,
-    payload: data,
-  };
-};
-
-export const asyncDetailMovie = (id) => {
+export const fetchMovieDetail = (id) => {
   return async (dispatch) => {
-    dispatch(fetchMovieIdRequest());
     try {
       const response = await fetch(BASE_URL + "/movies/" + id, {
         headers: {
@@ -184,9 +75,68 @@ export const asyncDetailMovie = (id) => {
         throw data;
       }
 
-      dispatch({ type: MOVIEID_FETCH_SUCCESS, payload: data });
+      setTimeout(() => {
+        dispatch(movieFetchById(data));
+      }, 1000);
     } catch (error) {
-      dispatch(fetchMovieIdFailed(error));
+      swal("error", error.message);
+    }
+  };
+};
+
+export const createMovie = (inputMovieData) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(BASE_URL + "/movies", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          access_token: localStorage.access_token,
+        },
+        body: JSON.stringify(inputMovieData),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw data;
+      }
+
+      dispatch(fetchMovies());
+      swal("success", "Movie added.");
+    } catch (error) {
+      swal("error", error.message);
+    }
+  };
+};
+
+export const asyncEditMovies = (id, inputMovieData) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(BASE_URL + "/movies/" + id, {
+        method: "patch",
+        headers: {
+          "Content-Type": "application/json",
+          access_token: localStorage.access_token,
+        },
+        body: JSON.stringify(inputMovieData),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw data;
+      }
+
+      dispatch(fetchMovies());
+      swal("success", "Movie edited.");
+    } catch (error) {
+      swal("error", error.message);
+    }
+  };
+};
+
+export const deleteMovie = (id) => {
+  return async (dispatch) => {
+    try {
+    } catch (error) {
+      swal("error", error.message);
     }
   };
 };

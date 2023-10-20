@@ -1,144 +1,142 @@
 import {
-  ADD_GENRE_FAILED,
-  ADD_GENRE_REQUEST,
-  ADD_GENRE_SUCCESS,
-  EDIT_GENRE_FAILED,
-  EDIT_GENRE_REQUEST,
-  EDIT_GENRE_SUCCESS,
-  GENRE_FETCH_FAILED,
+  GENREID_FETCH_SUCCESS,
   GENRE_FETCH_REQUEST,
   GENRE_FETCH_SUCCESS,
 } from "./actionType";
 
+import Swal from "sweetalert2";
+const swal = (icon, title) => {
+  Swal.fire({
+    icon: icon,
+    title: title,
+    showConfirmButton: false,
+    timer: 1000,
+  });
+};
+
 const BASE_URL = "http://localhost:3000";
 
-export const fetchRequest = () => {
+export const genreFetchSuccess = (payload) => {
+  return {
+    type: GENRE_FETCH_SUCCESS,
+    payload,
+  };
+};
+
+export const genreFetchRequest = () => {
   return {
     type: GENRE_FETCH_REQUEST,
   };
 };
 
-export const fetchSuccess = (data) => {
+export const genreFetchById = (payload) => {
   return {
-    type: GENRE_FETCH_SUCCESS,
-    payload: data,
+    type: GENREID_FETCH_SUCCESS,
+    payload,
   };
 };
 
-export const fetchFailed = (data) => {
-  return {
-    type: GENRE_FETCH_FAILED,
-    payload: data,
-  };
-};
-
-export const asyncFetchGenres = () => {
+export const fetchAllGenre = () => {
   return async (dispatch) => {
-    dispatch(fetchRequest());
+    dispatch(genreFetchSuccess());
     try {
       const response = await fetch(BASE_URL + "/genres", {
         method: "get",
         headers: {
-          "Content-Type": "application/json",
+          access_token: localStorage.access_token,
         },
       });
-
-      if (!response.ok) {
-        throw { message: "Something Wrong" };
-      }
-
       const data = await response.json();
 
+      if (!response.ok) {
+        throw data;
+      }
+
       setTimeout(() => {
-        dispatch(fetchSuccess(data));
-      }, 2000);
+        dispatch(genreFetchSuccess(data));
+      }, 1000);
     } catch (error) {
-      dispatch(fetchFailed(error));
+      swal("error", error.message);
     }
   };
 };
 
-export const addRequest = () => {
-  return {
-    type: ADD_GENRE_REQUEST,
+export const fetchGenreById = (id) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(BASE_URL + "/genres/" + id, {
+        headers: {
+          access_token: localStorage.access_token,
+        },
+      });
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw data;
+      }
+
+      dispatch(genreFetchById(data));
+    } catch (error) {
+      swal("error", error.message);
+    }
   };
 };
 
-export const addSuccess = (data) => {
-  return {
-    type: ADD_GENRE_SUCCESS,
-    payload: data,
-  };
-};
-
-export const addFailed = (data) => {
-  return {
-    type: ADD_GENRE_FAILED,
-    payload: data,
-  };
-};
-
-export const asyncCreateGenre = (payload) => {
+export const createGenre = (payload) => {
   return async (dispatch) => {
     try {
       const response = await fetch(BASE_URL + "/genres", {
         method: "post",
         headers: {
           "Content-Type": "application/json",
+          access_token: localStorage.access_token,
         },
         body: JSON.stringify(payload),
       });
-      if (!response.ok) {
-        throw { message: "Something Wrong" };
-      }
-
       const data = await response.json();
 
-      return data;
+      if (!response.ok) {
+        throw data;
+      }
+
+      dispatch(fetchAllGenre());
+      swal("success", "Genre added.");
     } catch (error) {
-      dispatch(fetchFailed(error));
-      throw error;
+      swal("error", error.message);
     }
   };
 };
 
-export const editRequest = () => {
-  return {
-    type: EDIT_GENRE_REQUEST,
-  };
-};
-
-export const editSuccess = (data) => {
-  return {
-    type: EDIT_GENRE_SUCCESS,
-    payload: data,
-  };
-};
-
-export const editFailed = (data) => {
-  return {
-    type: EDIT_GENRE_FAILED,
-    payload: data,
-  };
-};
-
-export const asyncEditGenre = (genreId, genreData, navigate) => {
-  return (dispatch) => {
-    dispatch(editRequest());
-    fetch(BASE_URL + "/genres/" + genreId, {
-      method: "patch",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(genreData),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        dispatch(editSuccess(data));
-        navigate("/");
-      })
-      .catch((err) => {
-        dispatch(editFailed(err));
+export const editGenre = (id, payload) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(BASE_URL + "/genres/" + id, {
+        method: "patch",
+        headers: {
+          "Content-Type": "application/json",
+          access_token: localStorage.access_token,
+        },
+        body: JSON.stringify(payload),
       });
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw data;
+      }
+
+      dispatch(fetchAllGenre());
+      swal("success", "Genre edited.");
+    } catch (error) {
+      swal("error", error.message);
+    }
+  };
+};
+
+export const deleteGenre = (id) => {
+  return async (dispatch) => {
+    try {
+    } catch (error) {
+      swal("error", error.message);
+    }
   };
 };
