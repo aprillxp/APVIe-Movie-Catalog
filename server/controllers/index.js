@@ -5,9 +5,10 @@ const { User, Movie, Genre, Cast } = require("../models");
 class Controller {
   static async adminRegister(req, res, next) {
     try {
-      const { email, password, phoneNumber, address } = req.body;
+      const { username, email, password, phoneNumber, address } = req.body;
 
       const user = await User.create({
+        username,
         email,
         password,
         phoneNumber,
@@ -55,8 +56,18 @@ class Controller {
   static async getAllmovies(req, res, next) {
     try {
       const movies = await Movie.findAll({
-        include: [User, Genre],
-        order: [["id", "ASC"]]
+        include: [
+          {
+            model: User,
+            attributes: { exclude: ["createdAt", "updatedAt"] },
+          },
+          {
+            model: Genre,
+            attributes: { exclude: ["createdAt", "updatedAt"] },
+          },
+        ],
+        attributes: { exclude: ["createdAt", "updatedAt"] },
+        order: [["id", "ASC"]],
       });
 
       res.status(200).json(movies);
@@ -97,7 +108,9 @@ class Controller {
 
   static async getGenres(req, res, next) {
     try {
-      const genre = await Genre.findAll();
+      const genre = await Genre.findAll({
+        attributes: { exclude: ["createdAt", "updatedAt"] },
+      });
 
       res.status(200).json(genre);
     } catch (error) {

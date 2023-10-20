@@ -14,15 +14,15 @@ export default function Home() {
     dispatch(asyncFetchMovies());
   }, []);
 
-  // if (loading) {
-  //   return (
-  //     <div className="text-center h-screen">
-  //       <span className="justify-center loading loading-infinity loading-lg items-center">
-  //         <h3>Load your data...</h3>
-  //       </span>
-  //     </div>
-  //   );
-  // }
+  if (loading) {
+    return (
+      <div className="text-center h-screen">
+        <span className="justify-center loading loading-infinity loading-lg items-center">
+          <h3>Load your data...</h3>
+        </span>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -39,8 +39,8 @@ export default function Home() {
               <h1 className="text-xl font-bold font-sans">Movie List</h1>
             </div>
             <div className="justify-self-end">
-              <button className="bg-yellow-500 rounded-md text-black p-2 px-4 hover:bg-yellow-700 font-semibold">
-                <Link to="/form">+ Movie</Link>
+              <button className="text-grey font-semibold border-r-4 border-yellow-700 px-3 hover:text-white">
+                <Link to="/add-form">+ Movie</Link>
               </button>
             </div>
           </div>
