@@ -1,6 +1,16 @@
-const { Movie } = require("../models");
+const { Movie, Cast } = require("../models");
 
 class UserController {
+  static async getCasts(req, res, next) {
+    try {
+      const casts = await Cast.findAll({
+        order: [["name", "desc"]],
+      });
+      res.json(casts);
+    } catch (error) {
+      next(error);
+    }
+  }
   static async getUserMovies(req, res, next) {
     try {
       const movies = await Movie.findAll();
