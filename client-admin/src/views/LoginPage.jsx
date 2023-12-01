@@ -1,24 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, Input, Button, Typography } from "@material-tailwind/react";
 import { handleLogin } from "../store/actions";
 import { useDispatch } from "react-redux";
 
 export default function Login() {
-  const [input, setInput] = useState({ email: "", password: "" });
+  const [input, setInput] = useState({});
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const handleLoginForm = (e) => {
-    e.preventDefault();
-    dispatch(
-      handleLogin(input, ({ status }) => {
-        if (status) {
-          navigate("/");
-        }
-      })
-    );
-  };
 
   const changeState = (e) => {
     const { name, value } = e.target;
@@ -28,9 +17,9 @@ export default function Login() {
     });
   };
 
-  useEffect(() => {
-    // console.log(input);
-  }, [input]);
+  const handleLoginForm = () => {
+    dispatch(handleLogin(input)).finally(() => navigate("/"));
+  };
 
   return (
     <>
@@ -44,7 +33,7 @@ export default function Login() {
           </Typography>
           <form
             className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
-            onSubmit={handleLoginForm}
+            onSubmit={(e) => handleLoginForm(e.preventDefault())}
           >
             <div className="mb-4 flex flex-col gap-6">
               <Input
@@ -53,7 +42,7 @@ export default function Login() {
                 name="email"
                 onChange={changeState}
               />
-              <Input 
+              <Input
                 type="password"
                 size="lg"
                 label="Password"

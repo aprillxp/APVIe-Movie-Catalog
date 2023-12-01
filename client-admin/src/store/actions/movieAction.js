@@ -108,7 +108,7 @@ export const createMovie = (inputMovieData) => {
   };
 };
 
-export const asyncEditMovies = (id, inputMovieData) => {
+export const editMovie = (id, inputMovieData) => {
   return async (dispatch) => {
     try {
       const response = await fetch(BASE_URL + "/movies/" + id, {

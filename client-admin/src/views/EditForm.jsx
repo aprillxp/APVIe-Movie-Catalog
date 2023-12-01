@@ -1,5 +1,5 @@
 import { Card, Input, Button, Typography } from "@material-tailwind/react";
-import { asyncEditMovies, asyncDetailMovie } from "../store/actions";
+import { editMovie, fetchMovieDetail } from "../store/actions";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -34,11 +34,11 @@ export default function EditFrom() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(asyncEditMovies(movieId, movieState, navigate));
+    dispatch(editMovie(movieId, movieState, navigate));
   };
 
   useEffect(() => {
-    dispatch(asyncDetailMovie(movieId));
+    dispatch(fetchMovieDetail(movieId));
   }, []);
 
   return (
@@ -60,14 +60,18 @@ export default function EditFrom() {
               <Input size="lg" label="Slug" onChange={changeInput} />
               <Input size="lg" label="Synopsis" onChange={changeInput} />
               <div className="dropdown">
-                <label tabIndex={0} className="btn m-1 text-white" onChange={changeInput}>
+                <label
+                  tabIndex={0}
+                  className="btn m-1 text-white"
+                  onChange={changeInput}
+                >
                   Genre
                 </label>
                 <ul
                   tabIndex={0}
                   className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
                 >
-                  <div style={{color: 'white'}}>
+                  <div style={{ color: "white" }}>
                     <li>
                       <a>Horror</a>
                     </li>

@@ -1,7 +1,7 @@
 import MovieTable from "../components/TableRow";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { asyncFetchMovies } from "../store/actions";
+import { fetchMovies } from "../store/actions";
 import { Link } from "react-router-dom";
 
 export default function Home() {
@@ -11,7 +11,7 @@ export default function Home() {
   });
 
   useEffect(() => {
-    dispatch(asyncFetchMovies());
+    dispatch(fetchMovies());
   }, []);
 
   // if (loading) {

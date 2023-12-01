@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Card, Input, Button, Typography } from "@material-tailwind/react";
 import { useDispatch } from "react-redux";
-import { asyncCreateMovie } from "../store/actions";
+import { createMovie } from "../store/actions";
 import { useNavigate } from "react-router-dom";
 
 export default function AddMovie() {
@@ -32,7 +32,7 @@ export default function AddMovie() {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(asyncCreateMovie(movieState));
+    dispatch(createMovie(movieState));
   };
 
   return (

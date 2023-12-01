@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
-import Home from "./views/HomePage";
+import { Provider } from "react-redux";
+import { RouterProvider } from "react-router-dom";
 
 function App() {
   return (
     <>
-      <div className="container-md">
-        <Home />
-      </div>
+      <Provider>
+        <RouterProvider />
+      </Provider>
     </>
   );
 }
