@@ -1,4 +1,4 @@
-const { Movie, Cast } = require("../models");
+const { Movie, Cast, User, Genre } = require("../models");
 
 class UserController {
   static async getCasts(req, res, next) {
@@ -23,9 +23,27 @@ class UserController {
 
   static async getOneUserMovies(req, res, next) {
     try {
-      const movieDetail = await Movie.findByPk(req.params.id);
-
-      res.status(200).json(movieDetail);
+      const { slug } = req.params;
+      const data = {
+        where: { slug },
+        attributes: { exclude: ["createdAt", "updatedAt"] },
+        include: [
+          {
+            model: User,
+            attributes: { exclude: ["password", "createdAt", "updatedAt"] },
+          },
+          {
+            model: Genre,
+          },
+          {
+            model: Cast,
+            attributes: ["name", "profilePict"],
+          },
+        ],
+      };
+      const movie = await Movie.findOne(data);
+      if (!movie) throw { name: "Not Found" };
+      res.status(200).json(movie);
     } catch (error) {
       next(error);
     }
