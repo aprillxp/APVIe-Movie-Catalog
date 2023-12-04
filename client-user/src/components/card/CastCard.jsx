@@ -1,9 +1,15 @@
-import React from 'react'
+import React from "react";
 
-const CastCard = () => {
+const CastCard = ({ name, profilePict }) => {
   return (
-    <div>CastCard</div>
-  )
-}
+    <div className="flex flex-col mx-2 ">
+      <div
+        className="w-48 h-48 bg-cover rounded-full m-auto"
+        style={{ backgroundImage: `url(${profilePict})` }}
+      ></div>
+      <p className="text-center mt-5">{name}</p>
+    </div>
+  );
+};
 
-export default CastCard
+export default CastCard;

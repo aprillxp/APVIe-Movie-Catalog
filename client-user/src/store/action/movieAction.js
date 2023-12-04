@@ -1,5 +1,4 @@
 import {
-  FETCH_CASTS_SUCCESS,
   FETCH_MOVIE_BY_ID_REQUEST,
   FETCH_MOVIE_BY_ID_SUCCESS,
   FETCH_MOVIE_REQUEST,
@@ -20,7 +19,7 @@ export const fetchMovieByIdRequest = () => {
   return { type: FETCH_MOVIE_BY_ID_REQUEST };
 };
 export const fetchMovieByIdSuccess = (payload) => {
-  return { type: FETCH_MOVIE_BY_ID_REQUEST, payload };
+  return { type: FETCH_MOVIE_BY_ID_SUCCESS, payload };
 };
 
 export const fetchMovies = () => {
@@ -39,11 +38,11 @@ export const fetchMovies = () => {
   };
 };
 
-export const fetchMovieById = (id) => {
+export const fetchMovieById = (slug) => {
   return async (dispatch) => {
     dispatch(fetchMovieByIdRequest());
     try {
-      const response = await fetch(BASE_URL + `/pub/movies/${id}`);
+      const response = await fetch(BASE_URL + `/pub/movies/${slug}`);
       const data = await response.json();
       if (!response.ok) throw data;
       setTimeout(() => {
