@@ -27,6 +27,9 @@ module.exports = {
       imgUrl: {
         type: Sequelize.STRING,
       },
+      imgCover: {
+        type: Sequelize.STRING,
+      },
       rating: {
         type: Sequelize.INTEGER,
         allowNull: false,

@@ -54,6 +54,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       trailerUrl: DataTypes.STRING,
       imgUrl: DataTypes.STRING,
+      imgCover: DataTypes.STRING,
       rating: {
         type: DataTypes.STRING,
         allowNull: false,
