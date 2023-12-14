@@ -1,6 +1,6 @@
 import { FETCH_CASTS_SUCCESS } from "./actionType";
 
-const BASE_URL = "https://localhost:3000";
+const BASE_URL = "http://localhost:3000";
 
 export const fetchCastsSuccess = (payload) => {
   return { type: FETCH_CASTS_SUCCESS, payload };

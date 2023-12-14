@@ -1,12 +1,13 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <div className="navbar bg-[#181414] px-24 text-black py-0 font-roboto">
+    <div className="navbar bg-[#121212] px-24 text-black py-0 font-roboto">
       <div className="navbar-start">
         <Link
           to="/"
-          className="normal-case text-md px-3 py-1 bg-yellow-500 text-black font-roboto font-extrabold"
+          className="normal-case text-md px-3 py-1 bg-yellow-500 text-black font-roboto font-extrabold rounded"
         >
           APVIe
         </Link>
@@ -31,17 +32,10 @@ const Navbar = () => {
       </div>
       <div className="navbar-center hidden lg:flex">
         <div className="w-96 flex">
-          <select
-            className="rounded-l-lg border-r border-gray-400 py-2 px-2 bg-white font-semibold"
-            defaultValue="All"
-          >
-            <option>All</option>
-            <option value="movie">Movie</option>
-          </select>
           <input
             type="text"
-            placeholder="Search"
-            className="rounded-r-lg w-24 md:w-full bg-white border-l border-gray-400 px-3"
+            placeholder="Search APVIe"
+            className="rounded w-24 md:w-full bg-white border-l border-gray-400 p-1 px-5"
           />
         </div>
       </div>

@@ -14,7 +14,7 @@ const MovieListCard = ({ title, image, id, imgUrl, genre, trailer }) => {
         <div className="flex gap-5">
           <div className="card md:w-58 bg-base-100 shadow-xl rounded-none font-[rubik] text-white relative">
             <figure>
-              <img src={image} alt="" className="w-full md:h-72" />
+              <img src={image} alt="" className="w-full md:h-72 object-cover" />
             </figure>
           </div>
           <a

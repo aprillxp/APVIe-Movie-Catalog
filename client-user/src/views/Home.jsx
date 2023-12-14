@@ -155,8 +155,8 @@ const Home = () => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    nextArrow: <SampleNextArrow />,
-    prevArrow: <SamplePrevArrow />,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
   };
 
   const secondTools = {
@@ -208,7 +208,7 @@ const Home = () => {
                 imageCover={movie.imgCover}
                 id={movie.id}
                 title={movie.title}
-                genre={movie.Genre.name}
+                genre={movie.name}
                 key={movie.id}
                 trailer={movie.trailerUrl}
               />
@@ -301,17 +301,19 @@ const Home = () => {
       {/* end Watchlist */}
 
       {/* top 10 APVIe */}
-      <div>
+      <div className="md:mx-24 mx-5 py-10 text-white font-[roboto]">
         <Title title={"Top 10 APVIe"} />
-        <div>
+        <div className="flex overflow-x-scroll">
           {topTen.map((movie) => (
-            <MovieCard
-              title={movie.title}
-              key={movie.id}
-              image={movie.imgUrl}
-              rating={movie.rating}
-              trailerUrl={movie.trailerUrl}
-            />
+            <div key={movie.id} className="w-1/6 shrink-0">
+              <MovieCard
+                title={movie.title}
+                key={movie.id}
+                image={movie.imgUrl}
+                rating={movie.rating}
+                trailerUrl={movie.trailerUrl}
+              />
+            </div>
           ))}
         </div>
       </div>

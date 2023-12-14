@@ -5,7 +5,7 @@ import {
   FETCH_MOVIE_SUCCESS,
 } from "./actionType";
 
-const BASE_URL = "https://localhost:3000";
+const BASE_URL = "http://localhost:3000";
 
 export const fetchMovieRequest = () => {
   return { type: FETCH_MOVIE_REQUEST };
@@ -18,6 +18,7 @@ export const fetchMovieSuccess = (payload) => {
 export const fetchMovieByIdRequest = () => {
   return { type: FETCH_MOVIE_BY_ID_REQUEST };
 };
+
 export const fetchMovieByIdSuccess = (payload) => {
   return { type: FETCH_MOVIE_BY_ID_SUCCESS, payload };
 };
@@ -33,6 +34,7 @@ export const fetchMovies = () => {
         dispatch(fetchMovieSuccess(data));
       }, 1000);
     } catch (error) {
+      console.log(error, '< in action');
       throw error;
     }
   };

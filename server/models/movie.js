@@ -77,7 +77,7 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   Movie.beforeCreate((movie) => {
-    movie.slug = movie.name.toLowerCase().replace(/\s+/g, "-");
-  });
+    movie.slug = movie.name.toLowerCase().replace(/\s+/g, "-");
+  });
   return Movie;
 };

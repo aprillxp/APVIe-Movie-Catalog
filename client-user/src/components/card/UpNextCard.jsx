@@ -5,7 +5,7 @@ const UpNextCard = ({ image, title, genre, id, trailerUrl }) => {
   return (
     <div className="flex gap-3" key={id + "upnext"}>
       <figure className="hover:cursor-pointer relative">
-        <img src={image} alt="" className="md:w-24 md:h-32" />
+        <img src={image} alt="" className="md:w-24 md:h-32 object-cover" />
         <div className="absolute inset-0 bg-black opacity-0 hover:opacity-50 transition-opacity"></div>
       </figure>
       <a

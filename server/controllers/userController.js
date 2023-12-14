@@ -6,11 +6,13 @@ class UserController {
       const casts = await Cast.findAll({
         order: [["name", "desc"]],
       });
-      res.json(casts);
+      res.status(200).json(casts);
     } catch (error) {
+      console.log(error, "<<<<<");
       next(error);
     }
   }
+
   static async getUserMovies(req, res, next) {
     try {
       const movies = await Movie.findAll();
