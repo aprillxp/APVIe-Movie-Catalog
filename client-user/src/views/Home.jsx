@@ -14,7 +14,7 @@ function NextArrow(params) {
   const { onClick } = params;
   return (
     <button
-      className="rounded-sm  flex absolute text-2xl hover:text-yellow-500 px-4 py-3 top-1/4 right-0 z-20 border border-white"
+      className="rounded flex absolute text-2xl hover:text-yellow-500 px-4 py-3 top-1/4 right-0 z-20 border border-white"
       onClick={onClick}
     >
       ❯
@@ -26,10 +26,10 @@ function PrevArrow(params) {
   const { onClick } = params;
   return (
     <button
-      className="hover:text-yellow-500 text-2xl bg-[hsla(0,0%,100%,.08)] rounded-sm flex absolute px-4 py-3 left-0 z-20 top-1/4 border border-white"
+      className="hover:text-yellow-500 text-2xl rounded flex absolute px-4 py-3 left-0 z-20 top-1/4 border border-white"
       onClick={onClick}
     >
-      ❯
+      ❮
     </button>
   );
 }
@@ -216,10 +216,10 @@ const Home = () => {
           </Slider>
         </div>
         <div className="lg:flex flex-col hidden">
-          <h1 className="text-yellow-500 text-4xl font-extrabold mb-3 font-[roboto]">
+          <h1 className="text-yellow-500 text-xl font-extrabold mb-3 font-[roboto]">
             Up next
           </h1>
-          <div className=" space-y-8 px-4 bg-gradient-to-t from-black via-black to-[hsla(0,0%,100%,.20)] p-2 md:w-96">
+          <div className="space-y-8 px-4 bg-gradient-to-b bg-black p-2 md:w-96">
             {upNext.map((e) => (
               <UpNextCard
                 title={e.title}
@@ -233,29 +233,36 @@ const Home = () => {
         </div>
       </div>
       {/* end header section */}
+
       {/* playing section */}
       <div className="md:mx-24 mx-5 py-10">
-        <h1 className="mb-6 text-yellow-500 text-4xl font-[roboto] font-bold flex">
+        <h1 className="mb-8 text-yellow-500 text-4xl font-[roboto] font-bold flex">
           What to watch
         </h1>
-        <Slider {...secondTools}>
+        <div className="font-[roboto] mb-8">
+          <Title title={"Top Picks"} />
+          <h4>TV shows and movies just for you</h4>
+        </div>
+        <div className="flex overflow-x-scroll">
           {movies.map((movie) => (
-            <MovieCard
-              title={movie.title}
-              key={movie.id}
-              image={movie.imgUrl}
-              rating={movie.rating}
-              slug={movie.slug}
-              trailerUrl={movie.trailerUrl}
-            />
+            <div key={movie.id} className="w-1/6 shrink-0">
+              <MovieCard
+                title={movie.title}
+                key={movie.id}
+                image={movie.imgUrl}
+                rating={movie.rating}
+                slug={movie.slug}
+                trailerUrl={movie.trailerUrl}
+              />
+            </div>
           ))}
-        </Slider>
+        </div>
       </div>
       {/* end playing section */}
 
       {/* Watchlist */}
       <div className="md:mx-24 mx-5 py-10 text-white font-[roboto]">
-        <Title title={"From your Watchlist"} />
+        <Title title={"From your Watchlist ❯"} />
         <div className="flex py-10">
           <div className="m-auto flex-col flex">
             <button className="m-auto">
@@ -283,15 +290,15 @@ const Home = () => {
               </svg>
             </button>
             <div className="text-center py-5">
-              <h1 className="text-xl font-bold">
+              <h1 className="text-l font-bold">
                 Sign in to access your Watchlist
               </h1>
-              <p>
+              <p className="text-sm">
                 Save shows and movies to keep track of what you want to watch.
               </p>
             </div>
             <div className="mt-5 text-center">
-              <button className="bg-gray-800 px-6 py-2 rounded text-sm text-blue-300">
+              <button className="bg-gray-900 px-6 py-2 rounded text-sm text-blue-300">
                 Sign in to APVIe
               </button>
             </div>
@@ -302,7 +309,7 @@ const Home = () => {
 
       {/* top 10 APVIe */}
       <div className="md:mx-24 mx-5 py-10 text-white font-[roboto]">
-        <Title title={"Top 10 APVIe"} />
+        <Title title={"Top 10 in APVIe this week"} />
         <div className="flex overflow-x-scroll">
           {topTen.map((movie) => (
             <div key={movie.id} className="w-1/6 shrink-0">

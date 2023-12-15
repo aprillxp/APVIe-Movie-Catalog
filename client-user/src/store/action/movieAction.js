@@ -34,7 +34,6 @@ export const fetchMovies = () => {
         dispatch(fetchMovieSuccess(data));
       }, 1000);
     } catch (error) {
-      console.log(error, '< in action');
       throw error;
     }
   };

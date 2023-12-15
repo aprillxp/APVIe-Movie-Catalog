@@ -1,15 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import logo from "../../assets/apviep-04.png";
+import * as icon from "react-bootstrap-icons";
 
 const Navbar = () => {
   return (
-    <div className="navbar bg-[#121212] px-24 text-black py-0 font-roboto">
+    <div className="navbar bg-[#121212] px-28 text-black py-0 font-roboto">
       <div className="navbar-start">
-        <Link
-          to="/"
-          className="normal-case text-md px-3 py-1 bg-yellow-500 text-black font-roboto font-extrabold rounded"
-        >
-          APVIe
+        <Link to="/" className="w-20">
+          <img src={logo} alt="" />
         </Link>
         <div className="flex">
           <button className=" text-white flex px-3 py-1 gap-1">
@@ -43,7 +42,7 @@ const Navbar = () => {
         <div className="flex-none">
           <ul className="menu menu-horizontal px-1 text-md">
             <li>
-              <a>WatchList</a>
+              <p>+ Watchlist</p>
             </li>
             <li>
               <a>Sign in</a>

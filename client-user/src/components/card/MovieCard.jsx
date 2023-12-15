@@ -31,9 +31,9 @@ const MovieCard = ({ title, image, id, rating, slug, trailerUrl }) => {
       </button>
 
       <figure>
-        <img src={image} alt="" className="w-full md:h-72" />
+        <img src={image} alt="" className="object-cover md:h-72" />
       </figure>
-      <div className="pt-2 pb-6 px-3 ">
+      <div className="pt-2 pb-6 px-3">
         <div className="flex gap-3">
           <div className="flex gap-2 py-2">
             <icon.StarFill size={20} className="text-yellow-500" /> {rating}
